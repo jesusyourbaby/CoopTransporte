@@ -15,7 +15,7 @@ public class CoopTransporte {
      */
     public static void main(String[] args) {
         // Definimos dos números
-        int numero1 = 5;
+        int numero1 = 55;
         int numero2 = 10;
 
         // Realizamos la suma
