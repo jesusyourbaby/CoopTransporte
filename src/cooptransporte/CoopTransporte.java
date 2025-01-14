@@ -23,6 +23,8 @@ public class CoopTransporte {
 
         // Mostramos el resultado en la consola
         System.out.println("La suma de " + numero1 + " y " + numero2 + " es: " + resultado);
+        
+        System.out.println("COMO TAN MUCHACHOS");
     }
     
 }
