@@ -49,8 +49,6 @@ public class principal extends javax.swing.JFrame {
         setTitle("Cooperativa De Transporte REALES TAMARINDOS");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-        setMaximumSize(getPreferredSize());
-        setPreferredSize(new java.awt.Dimension(1280, 720));
         setResizable(false);
         setSize(getPreferredSize());
 
@@ -91,6 +89,11 @@ public class principal extends javax.swing.JFrame {
         jMenu2.add(jMenuItem6);
 
         jMenuItem4.setText("Vender Boleto");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
         jMenuBar1.add(jMenu2);
@@ -136,6 +139,14 @@ public class principal extends javax.swing.JFrame {
         principal.add(fr);
         
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        ventaNueva fr = new ventaNueva();
+        fr.setVisible(true);    // Hacer visible el JInternalFrame
+
+        // Agregar el nuevoBus (JInternalFrame) al JDesktopPane
+        principal.add(fr);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
