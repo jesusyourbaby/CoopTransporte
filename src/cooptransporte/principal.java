@@ -20,11 +20,6 @@ public class principal extends javax.swing.JFrame {
     public principal() {
         bus bus1 = new bus(1);
         initComponents();
-        System.out.println("ASIENTOS DEL BUS");
-        for (boletos asiento : bus1.getAsientos()) {
-            // Mostrar la información de cada asiento utilizando toString()
-            System.out.println(asiento.toString());
-        }
     }
 
     /**
