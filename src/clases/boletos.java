@@ -33,5 +33,4 @@ public class boletos {
         return "boletos{" + "asiento=" + asiento + ", disponible=" + disponible + '}';
     }
     
-    
 }
