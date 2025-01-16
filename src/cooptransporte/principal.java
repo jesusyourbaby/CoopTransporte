@@ -5,6 +5,9 @@
  */
 package cooptransporte;
 
+import clases.boletos;
+import clases.bus;
+
 /**
  *
  * @author user
@@ -15,7 +18,13 @@ public class principal extends javax.swing.JFrame {
      * Creates new form principal
      */
     public principal() {
+        bus bus1 = new bus(1);
         initComponents();
+        System.out.println("ASIENTOS DEL BUS");
+        for (boletos asiento : bus1.getAsientos()) {
+            // Mostrar la información de cada asiento utilizando toString()
+            System.out.println(asiento.toString());
+        }
     }
 
     /**
@@ -28,6 +37,7 @@ public class principal extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuItem1 = new javax.swing.JMenuItem();
+        principal = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -49,6 +59,19 @@ public class principal extends javax.swing.JFrame {
         setResizable(false);
         setSize(getPreferredSize());
 
+        principal.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout principalLayout = new javax.swing.GroupLayout(principal);
+        principal.setLayout(principalLayout);
+        principalLayout.setHorizontalGroup(
+            principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 985, Short.MAX_VALUE)
+        );
+        principalLayout.setVerticalGroup(
+            principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 525, Short.MAX_VALUE)
+        );
+
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
         jMenuBar1.setToolTipText("");
 
@@ -58,6 +81,11 @@ public class principal extends javax.swing.JFrame {
         jMenu1.add(jMenuItem3);
 
         jMenuItem5.setText("Agregar Bus");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem5);
 
         jMenuBar1.add(jMenu1);
@@ -91,11 +119,11 @@ public class principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 985, Short.MAX_VALUE)
+            .addComponent(principal)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 525, Short.MAX_VALUE)
+            .addComponent(principal)
         );
 
         pack();
@@ -104,6 +132,15 @@ public class principal extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        nuevoBus fr = new nuevoBus();
+        fr.setVisible(true);    // Hacer visible el JInternalFrame
+
+        // Agregar el nuevoBus (JInternalFrame) al JDesktopPane
+        principal.add(fr);
+        
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -151,5 +188,6 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JDesktopPane principal;
     // End of variables declaration//GEN-END:variables
 }
