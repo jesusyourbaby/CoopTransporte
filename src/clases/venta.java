@@ -8,6 +8,9 @@ package clases;
  *
  * @author Jesus
  */
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class venta {
     // Atributos
     private String nombrePasajero;
@@ -74,5 +77,25 @@ public class venta {
 
     public void setNumeroBus(int numeroBus) {
         this.numeroBus = numeroBus;
+    }
+
+    /**
+     * Método para guardar los datos de la venta en un archivo.
+     */
+    public void guardarVentaEnArchivo(String nombreArchivo) {
+        try (FileWriter escritor = new FileWriter(nombreArchivo, true)) {
+            // Crear el registro de la venta
+            String registro = String.format(
+                "Nombre: %s, Asiento: %d, Ruta: %s, Fecha y Hora: %s, Precio: %.2f, Bus: %d\n",
+                nombrePasajero, numeroAsiento, rutaDestino, fechaHoraViaje, precioBoleto, numeroBus
+            );
+
+            // Escribir el registro en el archivo
+            escritor.write(registro);
+            System.out.println("Venta guardada en el archivo: " + nombreArchivo);
+        } catch (IOException e) {
+            System.err.println("Error al guardar la venta en el archivo: " + nombreArchivo);
+            e.printStackTrace();
+        }
     }
 }

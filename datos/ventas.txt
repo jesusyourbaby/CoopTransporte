@@ -1,0 +1,4 @@
+Registro de Ventas:
+Nombre: Jesus, Asiento: 1, Ruta: Portoviejo, Fecha y Hora: Mayo Cinco, Medianoche, Precio: 2,00, Bus: 1
+Nombre: Jesus, Asiento: 1, Ruta: Portoviejo, Fecha y Hora: Mayo Cinco, Medianoche, Precio: 2,00, Bus: 1
+Nombre: Jesus, Asiento: 1, Ruta: Portoviejo, Fecha y Hora: 5 de Mayo, 3:00, Precio: 2,00, Bus: 1
