@@ -1,13 +1,10 @@
 
 package clases;
 
-/**
- *
- * @author user
- */
 public class bus {
     
     public int numero;
+    public String estado;
     boletos[] asientos = new boletos[50];
 
     public bus(int numero) {

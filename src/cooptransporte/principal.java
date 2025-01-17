@@ -7,6 +7,9 @@ package cooptransporte;
 
 import clases.boletos;
 import clases.bus;
+import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
+import javax.swing.JLabel;
 
 /**
  *
@@ -20,6 +23,12 @@ public class principal extends javax.swing.JFrame {
     public principal() {
         bus bus1 = new bus(1);
         initComponents();
+        ImageIcon imagenFondo = new ImageIcon("src/images/fondo.jpg"); // Ruta de la imagen
+        JLabel fondo = new JLabel(imagenFondo);
+        fondo.setBounds(0, 0, principal.getWidth(), principal.getHeight()); // Ajustar el tamaño al de la ventana
+
+        // Agregar el JLabel al JDesktopPane
+        principal.add(fondo, JDesktopPane.DEFAULT_LAYER);
     }
 
     /**
@@ -71,6 +80,11 @@ public class principal extends javax.swing.JFrame {
         jMenu1.setText("Buses");
 
         jMenuItem3.setText("Ver Buses");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuItem5.setText("Agregar Bus");
@@ -86,6 +100,11 @@ public class principal extends javax.swing.JFrame {
         jMenu2.setText("Boletos");
 
         jMenuItem6.setText("Ver Boletos");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem6);
 
         jMenuItem4.setText("Vender Boleto");
@@ -136,7 +155,7 @@ public class principal extends javax.swing.JFrame {
         fr.setVisible(true);    // Hacer visible el JInternalFrame
 
         // Agregar el nuevoBus (JInternalFrame) al JDesktopPane
-        principal.add(fr);
+        principal.add(fr, javax.swing.JDesktopPane.PALETTE_LAYER);
         
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
@@ -145,8 +164,24 @@ public class principal extends javax.swing.JFrame {
         fr.setVisible(true);    // Hacer visible el JInternalFrame
 
         // Agregar el nuevoBus (JInternalFrame) al JDesktopPane
-        principal.add(fr);
+        principal.add(fr, javax.swing.JDesktopPane.PALETTE_LAYER);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        verBuses fr = new verBuses();
+        fr.setVisible(true);    // Hacer visible el JInternalFrame
+
+        // Agregar el nuevoBus (JInternalFrame) al JDesktopPane
+        principal.add(fr, javax.swing.JDesktopPane.PALETTE_LAYER);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        verVentas fr = new verVentas();
+        fr.setVisible(true);    // Hacer visible el JInternalFrame
+
+        // Agregar el nuevoBus (JInternalFrame) al JDesktopPane
+        principal.add(fr, javax.swing.JDesktopPane.PALETTE_LAYER);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
