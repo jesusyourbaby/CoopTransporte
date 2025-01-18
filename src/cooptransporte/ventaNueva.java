@@ -6,6 +6,7 @@
 package cooptransporte;
 
 import clases.venta;
+import datos.datos_clase;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -189,6 +190,8 @@ public class ventaNueva extends javax.swing.JInternalFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Por favor, rellene todos los campos.");
             return;
         }
+        
+        venta nuevaVenta = new venta(nombrePasajero, Integer.parseInt(numeroAsientoText), rutaDestino, fechaHoraViaje, Double.parseDouble(precioText), Integer.parseInt(numeroBusText));
 
         try {
             // Convertir los valores numéricos
@@ -197,7 +200,7 @@ public class ventaNueva extends javax.swing.JInternalFrame {
             int numeroBus = Integer.parseInt(numeroBusText);
 
             // Crear la instancia de venta
-            venta nuevaVenta = new venta(nombrePasajero, numeroAsiento, rutaDestino, fechaHoraViaje, precioBoleto, numeroBus);
+            //venta nuevaVenta = new venta(nombrePasajero, numeroAsiento, rutaDestino, fechaHoraViaje, precioBoleto, numeroBus);
 
             // Guardar la venta en el archivo CSV
             guardarVentaEnArchivoCSV(nuevaVenta);

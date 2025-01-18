@@ -5,11 +5,11 @@ package clases;
 public class boletos {
     
     public int asiento;
-    public boolean disponible;
+    public String disponible;
 
     public boletos(int numero) {
         this.asiento = numero;
-        this.disponible = true;
+        this.disponible = "disponible";
     }
 
     public int getAsiento() {
@@ -20,11 +20,11 @@ public class boletos {
         this.asiento = asiento;
     }
 
-    public boolean getDisponible() {
+    public String getDisponible() {
         return disponible;
     }
 
-    public void setDisponible(boolean disponible) {
+    public void setDisponible(String disponible) {
         this.disponible = disponible;
     }
 

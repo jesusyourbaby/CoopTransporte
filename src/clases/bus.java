@@ -9,6 +9,7 @@ public class bus {
 
     public bus(int numero) {
         this.numero = numero;
+        this.estado = "disponible";
         for (int i = 0; i < asientos.length; i++) {
             asientos[i] = new boletos(i+1);
         }
@@ -29,6 +30,16 @@ public class bus {
     public void setAsientos(boletos[] asientos) {
         this.asientos = asientos;
     }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
+    
     
     
     

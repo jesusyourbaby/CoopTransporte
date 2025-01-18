@@ -14,12 +14,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author user
  */
-public class verBuses extends javax.swing.JInternalFrame {
+public class verAsientos extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form verBuses
      */
-    public verBuses() {
+    public verAsientos() {
         initComponents();
     }
     
@@ -75,6 +75,11 @@ public void cargarDatos() {
         } catch (java.beans.PropertyVetoException e1) {
             e1.printStackTrace();
         }
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                noMovimiento(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -152,6 +157,10 @@ public void cargarDatos() {
     private void seleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_seleccionarActionPerformed
+
+    private void noMovimiento(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_noMovimiento
+        // TODO add your handling code here:
+    }//GEN-LAST:event_noMovimiento
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

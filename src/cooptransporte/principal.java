@@ -7,6 +7,9 @@ package cooptransporte;
 
 import clases.boletos;
 import clases.bus;
+import datos.datos_clase;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
@@ -21,7 +24,10 @@ public class principal extends javax.swing.JFrame {
      * Creates new form principal
      */
     public principal() {
-        bus bus1 = new bus(1);
+        datos_clase datos = new datos_clase();
+        datos.verificarOCrearArchivo("ventas");
+        datos.verificarOCrearArchivo("buses");
+        datos.verificarOCrearArchivo("boletos");
         initComponents();
         ImageIcon imagenFondo = new ImageIcon("src/images/fondo.jpg"); // Ruta de la imagen
         JLabel fondo = new JLabel(imagenFondo);
@@ -144,6 +150,7 @@ public class principal extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -169,6 +176,7 @@ public class principal extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         verBuses fr = new verBuses();
+        fr.cargarDatos();
         fr.setVisible(true);    // Hacer visible el JInternalFrame
 
         // Agregar el nuevoBus (JInternalFrame) al JDesktopPane

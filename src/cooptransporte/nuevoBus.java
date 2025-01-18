@@ -5,12 +5,16 @@
  */
 package cooptransporte;
 
+import clases.bus;
+import datos.datos_clase;
+
 /**
  *
  * @author user
  */
 public class nuevoBus extends javax.swing.JInternalFrame {
-
+    
+    datos_clase datos = new datos_clase();
     /**
      * Creates new form nuevoBus
      */
@@ -44,6 +48,11 @@ public class nuevoBus extends javax.swing.JInternalFrame {
         });
 
         jButton1.setText("Guardar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -79,6 +88,32 @@ public class nuevoBus extends javax.swing.JInternalFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        try {
+            int codigo = Integer.parseInt(jTextField1.getText());
+
+            bus b = new bus(codigo);
+            
+            if(datos.guardarVentaBusCSV(b)){
+                this.dispose();
+            }else{
+                javax.swing.JOptionPane.showMessageDialog(null,"El numero de bus ya esta registrado");
+            }
+            
+            
+            
+
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Ingrese un codigo en numeros (Ejp: 123..)");
+        }
+        
+            
+        
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
