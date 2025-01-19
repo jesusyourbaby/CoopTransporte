@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
+import javax.swing.UIManager;
 
 /**
  *
@@ -24,6 +25,14 @@ public class principal extends javax.swing.JFrame {
      * Creates new form principal
      */
     public principal() {
+        
+        try {
+            // Establecer el Look and Feel de Windows (si está disponible)
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         datos_clase datos = new datos_clase();
         datos.verificarOCrearArchivo("ventas");
         datos.verificarOCrearArchivo("buses");

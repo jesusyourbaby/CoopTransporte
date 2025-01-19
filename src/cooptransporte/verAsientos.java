@@ -65,7 +65,7 @@ public void cargarDatos() {
         seleccionar = new javax.swing.JButton();
 
         setClosable(true);
-        setTitle("Lista de Buses");
+        setTitle("Lista de Voletos");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setPreferredSize(new java.awt.Dimension(336, 270));
         try {
