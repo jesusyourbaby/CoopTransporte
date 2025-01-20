@@ -19,16 +19,28 @@ public class verAsientos extends javax.swing.JInternalFrame {
     /**
      * Creates new form verBuses
      */
+    int bus;
+
+    public int getBus() {
+        return bus;
+    }
+
+    public void setBus(int bus) {
+        this.bus = bus;
+    }
+    
+    
+    
     public verAsientos() {
         initComponents();
     }
     
 public void cargarDatos() {
         // Definir el archivo CSV
-        String archivo = "datos/buses.csv";
+        String archivo = "datos/boletos.csv";
 
         // Crear el modelo de la tabla con las columnas ya definidas
-        String[] columnas = {"Número de Bus", "Estado"}; // Las columnas que ya tienes establecidas
+        String[] columnas = {"Asiento", "Estado"}; // Las columnas que ya tienes establecidas
         DefaultTableModel modelo = new DefaultTableModel(null, columnas){
             public boolean isCellEditable(int row, int column) {
                 return false; // Ninguna celda será editable
@@ -38,10 +50,13 @@ public void cargarDatos() {
         // Leer el archivo y cargar los datos en el modelo
         try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
             String linea;
+            numBus.setText(String.valueOf(bus));
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(","); // Separar los datos por coma
-
-                    modelo.addRow(new Object[]{datos[0], datos[1]});
+                
+                    if(Integer.parseInt(datos[0]) == bus){
+                        modelo.addRow(new Object[]{datos[1], datos[2]});
+                    }
             }
         } catch (IOException e) {
             System.err.println("Error al leer el archivo: " + e.getMessage());
@@ -49,7 +64,7 @@ public void cargarDatos() {
 
         // Asignar el modelo a la JTable
         jTable1.setModel(modelo); // jTable1 es la tabla donde se cargarán los datos
-    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,9 +78,11 @@ public void cargarDatos() {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         seleccionar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        numBus = new javax.swing.JLabel();
 
         setClosable(true);
-        setTitle("Lista de Voletos");
+        setTitle("Lista de Boletos");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setPreferredSize(new java.awt.Dimension(336, 270));
         try {
@@ -98,24 +115,40 @@ public void cargarDatos() {
             }
         });
 
+        jLabel1.setText("Asientos del bus:");
+
+        numBus.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        numBus.setForeground(new java.awt.Color(51, 51, 255));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 183, Short.MAX_VALUE)
-                        .addComponent(seleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(193, Short.MAX_VALUE)
+                        .addComponent(seleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(numBus, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(numBus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(seleccionar)
                 .addContainerGap())
@@ -134,8 +167,10 @@ public void cargarDatos() {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel numBus;
     private javax.swing.JButton seleccionar;
     // End of variables declaration//GEN-END:variables
 }

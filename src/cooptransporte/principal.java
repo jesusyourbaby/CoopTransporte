@@ -185,6 +185,7 @@ public class principal extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         verBuses fr = new verBuses();
+        fr.setPr(principal);
         fr.cargarDatos();
         fr.setVisible(true);    // Hacer visible el JInternalFrame
 

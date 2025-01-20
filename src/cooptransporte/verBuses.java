@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.table.DefaultTableModel;
+import cooptransporte.principal;
+import javax.swing.JDesktopPane;
 
 /**
  *
@@ -19,6 +21,19 @@ public class verBuses extends javax.swing.JInternalFrame {
     /**
      * Creates new form verBuses
      */
+    
+    JDesktopPane pr;
+
+    public JDesktopPane getPr() {
+        return pr;
+    }
+
+    public void setPr(JDesktopPane pr) {
+        this.pr = pr;
+    }
+    
+    
+    
     public verBuses() {
         initComponents();
     }
@@ -146,7 +161,17 @@ public void cargarDatos() {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        int fila = jTable1.getSelectedRow();
+        if (fila != -1) {
+            Object valor = jTable1.getValueAt(fila, 0); // 0 es la primera columna
+            verAsientos va = new verAsientos();
+            va.setBus(Integer.parseInt((String) valor));
+            va.cargarDatos();
+            pr.moveToFront(va); // Mueve al frente
+            pr.add(va, javax.swing.JDesktopPane.PALETTE_LAYER);
+            System.out.println("Se abrira la ventana");
+            va.setVisible(true);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void seleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarActionPerformed
