@@ -158,6 +158,118 @@ public void cargarDatos() {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        // Validar que se haya seleccionado una fila
+        int fila = jTable1.getSelectedRow();
+        if (fila != -1) {
+            // Obtener el número de bus y el estado de la fila seleccionada
+            String numeroBus = jTable1.getValueAt(fila, 0).toString();
+            String estadoBus = jTable1.getValueAt(fila, 1).toString();
+
+            switch (estadoBus) {
+                case "disponible":
+                    // Proceder con la eliminación directa
+                    eliminarBusYAsientos(numeroBus);
+                    javax.swing.JOptionPane.showMessageDialog(
+                        this, 
+                        "Bus y boletos eliminados correctamente."
+                    );
+                    break;
+
+                case "reservado":
+                    // Mostrar advertencia antes de eliminar
+                    int confirmacion = javax.swing.JOptionPane.showConfirmDialog(
+                        this,
+                        "¿Está seguro de eliminar este bus? Los boletos vendidos serán cancelados inmediatamente.",
+                        "Confirmar eliminación",
+                        javax.swing.JOptionPane.YES_NO_OPTION
+                    );
+
+                    if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
+                        eliminarBusYAsientos(numeroBus);
+                        javax.swing.JOptionPane.showMessageDialog(
+                            this, 
+                            "Bus y boletos eliminados correctamente."
+                        );
+                    }
+                    break;
+
+                case "ocupado":
+                    // Mostrar mensaje de error
+                    javax.swing.JOptionPane.showMessageDialog(
+                        this,
+                        "Imposible eliminar el bus. Por favor, libere los asientos primero.",
+                        "Error",
+                        javax.swing.JOptionPane.ERROR_MESSAGE
+                    );
+                    break;
+
+                default:
+                    // Caso inesperado
+                    javax.swing.JOptionPane.showMessageDialog(
+                        this,
+                        "Estado desconocido. Por favor, revise los datos.",
+                        "Advertencia",
+                        javax.swing.JOptionPane.WARNING_MESSAGE
+                    );
+            }
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(
+                this, 
+                "Debe seleccionar un bus para eliminar.", 
+                "Advertencia", 
+                javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+        }
+    }
+
+    // Método auxiliar para eliminar bus y sus asientos relacionados
+    private void eliminarBusYAsientos(String numeroBus) {
+        // Ruta de los archivos CSV
+        String archivoBuses = "datos/buses.csv";
+        String archivoBoletos = "datos/boletos.csv";
+
+        // **1. Eliminar el bus del archivo buses.csv**
+        StringBuilder contenidoActualizadoBuses = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivoBuses))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] datos = linea.split(",");
+                if (!datos[0].equals(numeroBus)) { // Excluir el bus seleccionado
+                    contenidoActualizadoBuses.append(linea).append("\n");
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error al leer el archivo buses.csv: " + e.getMessage());
+        }
+
+        try (java.io.FileWriter writer = new java.io.FileWriter(archivoBuses)) {
+            writer.write(contenidoActualizadoBuses.toString());
+        } catch (IOException e) {
+            System.err.println("Error al escribir en el archivo buses.csv: " + e.getMessage());
+        }
+
+        // **2. Eliminar los asientos relacionados del archivo boletos.csv**
+        StringBuilder contenidoActualizadoBoletos = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivoBoletos))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] datos = linea.split(",");
+                if (!datos[0].equals(numeroBus)) { // Excluir boletos del bus seleccionado
+                    contenidoActualizadoBoletos.append(linea).append("\n");
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error al leer el archivo boletos.csv: " + e.getMessage());
+        }
+
+        try (java.io.FileWriter writer = new java.io.FileWriter(archivoBoletos)) {
+            writer.write(contenidoActualizadoBoletos.toString());
+        } catch (IOException e) {
+            System.err.println("Error al escribir en el archivo boletos.csv: " + e.getMessage());
+        }
+
+        // **3. Recargar los datos en la tabla**
+        cargarDatos();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
