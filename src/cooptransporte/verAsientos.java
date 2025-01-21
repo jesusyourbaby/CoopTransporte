@@ -5,9 +5,11 @@
  */
 package cooptransporte;
 
+import interfaces.selecciona_boletos;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,6 +22,19 @@ public class verAsientos extends javax.swing.JInternalFrame {
      * Creates new form verBuses
      */
     int bus;
+    private selecciona_boletos listener;
+
+    public void setListener(selecciona_boletos listener) {
+        this.listener = listener;  // Asignar la instancia de VentanaDestino
+    }
+
+    public JButton getSeleccionar() {
+        return seleccionar;
+    }
+
+    public void setSeleccionar(JButton seleccionar) {
+        this.seleccionar = seleccionar;
+    }
 
     public int getBus() {
         return bus;
@@ -34,6 +49,8 @@ public class verAsientos extends javax.swing.JInternalFrame {
     public verAsientos() {
         initComponents();
     }
+    
+    
     
 public void cargarDatos() {
         // Definir el archivo CSV
@@ -158,7 +175,18 @@ public void cargarDatos() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void seleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarActionPerformed
-        // TODO add your handling code here:
+        int fila = jTable1.getSelectedRow();
+        if(fila != -1){
+            String valor = jTable1.getValueAt(fila, 0).toString();
+            if (listener != null) {
+                listener.recibirBoletos(valor); // Pasar el valor a la interfaz
+                this.dispose();
+            } else {
+                System.out.println("Error: El listener no ha sido asignado.");
+            }
+        }else{
+            System.out.println("Ninguna fila seleccionada");
+        }
     }//GEN-LAST:event_seleccionarActionPerformed
 
     private void noMovimiento(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_noMovimiento

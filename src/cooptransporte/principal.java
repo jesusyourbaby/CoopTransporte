@@ -177,10 +177,12 @@ public class principal extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         ventaNueva fr = new ventaNueva();
-        fr.setVisible(true);    // Hacer visible el JInternalFrame
-
+        fr.cargaCombo();
+        fr.setPr(principal);
         // Agregar el nuevoBus (JInternalFrame) al JDesktopPane
         principal.add(fr, javax.swing.JDesktopPane.PALETTE_LAYER);
+        fr.setVisible(true);    // Hacer visible el JInternalFrame
+
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
