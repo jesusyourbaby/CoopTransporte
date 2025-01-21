@@ -249,7 +249,7 @@ public class ventaNueva extends javax.swing.JInternalFrame implements selecciona
         // TODO add your handling code here:
         // Recoger los datos de la interfaz
         String nombrePasajero = nombre.getText(); // Campo para el nombre del pasajero
-        String rutaDestino = precio.getText(); // Ruta seleccionada en un JComboBox
+        String rutaDestino = destino.getText(); // Ruta seleccionada en el campo de texto "destino"
         String fechaHoraViaje = asiento.getText() + ", " + destino.getText(); // Fecha y hora del viaje
         String numeroAsientoText = asiento.getText(); // Número de asiento
         String precioText = precio.getText(); // Precio del boleto
@@ -260,25 +260,22 @@ public class ventaNueva extends javax.swing.JInternalFrame implements selecciona
             rutaDestino.trim().isEmpty() || 
             fechaHoraViaje.trim().isEmpty() || 
             numeroAsientoText.trim().isEmpty() || 
-            //precioText.trim().isEmpty() || 
             numeroBusText.trim().isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "Por favor, rellene todos los campos.");
             return;
         }
-        
-        //venta nuevaVenta = new venta(nombrePasajero, Integer.parseInt(numeroAsientoText), rutaDestino, fechaHoraViaje, Double.parseDouble(precioText), Integer.parseInt(numeroBusText));
 
         try {
             // Convertir los valores numéricos
             int numeroAsiento = Integer.parseInt(numeroAsientoText);
-            //double precioBoleto = Double.parseDouble(precioText);
+            double precioBoleto = Double.parseDouble(precioText);
             int numeroBus = Integer.parseInt(numeroBusText);
 
             // Crear la instancia de venta
-            venta nuevaVenta = new venta(nombrePasajero, numeroAsiento, rutaDestino, fechaHoraViaje, Double.parseDouble(precioText), numeroBus);
+            venta nuevaVenta = new venta(nombrePasajero, numeroAsiento, rutaDestino, fechaHoraViaje, precioBoleto, numeroBus);
 
             // Guardar la venta en el archivo CSV
-           guardarVentaEnArchivoCSV(nuevaVenta);
+            guardarVentaEnArchivoCSV(nuevaVenta);
 
             // Mostrar mensaje de confirmación
             javax.swing.JOptionPane.showMessageDialog(this, "Venta registrada con éxito.");

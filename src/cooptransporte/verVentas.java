@@ -4,18 +4,25 @@
  * and open the template in the editor.
  */
 package cooptransporte;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.io.*;
 
 /**
  *
  * @author user
  */
 public class verVentas extends javax.swing.JInternalFrame {
+    
+   
+
 
     /**
      * Creates new form verVentas
      */
     public verVentas() {
         initComponents();
+        cargarVentas();
     }
 
     /**
@@ -27,24 +34,78 @@ public class verVentas extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+
         setClosable(true);
         setTitle("Boletos Vendidos");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Cliente", "Asiento", "N. Bus", "N. Venta", "Destino", "Precio", "Cantidad"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(38, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(59, 59, 59)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+        // Método para cargar los boletos vendidos desde boletos.csv
+        private void cargarVentas() {
+        String archivoVentas = "datos/ventas.csv";  // Verifica que la ruta sea correcta
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivoVentas))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] datos = linea.split(","); // Dividir por coma
+
+                // Verificar que hay exactamente 7 elementos en cada línea
+                if (datos.length == 7) {
+                    String cliente = datos[0];     // Cliente
+                    String asiento = datos[1];     // Asiento
+                    String numeroBus = datos[2];   // Número de Bus
+                    String numeroVenta = datos[3]; // Número de Venta
+                    String destino = datos[4];     // Destino
+                    String precio = datos[5];      // Precio
+                    String cantidad = datos[6];    // Cantidad
+
+                    // Aquí se debe usar jTable1, ya que es el componente real
+                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                    model.addRow(new Object[]{cliente, asiento, numeroBus, numeroVenta, destino, precio, cantidad});
+                }
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Error al leer el archivo de ventas: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
