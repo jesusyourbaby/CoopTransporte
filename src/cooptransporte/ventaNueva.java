@@ -13,8 +13,11 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import javax.swing.JDesktopPane;
 import javax.swing.JTextField;
 
@@ -151,6 +154,8 @@ public class ventaNueva extends javax.swing.JInternalFrame implements selecciona
             }
         });
 
+        fecha.setDateFormatString("dd-mm-yyyy");
+
         jButton2.setText("...");
         jButton2.setPreferredSize(new java.awt.Dimension(30, 20));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -249,30 +254,35 @@ public class ventaNueva extends javax.swing.JInternalFrame implements selecciona
         // TODO add your handling code here:
         // Recoger los datos de la interfaz
         String nombrePasajero = nombre.getText(); // Campo para el nombre del pasajero
+        String apellidoPasajero = apellido.getText(); // Campo para el nombre del pasajero
         String rutaDestino = destino.getText(); // Ruta seleccionada en el campo de texto "destino"
-        String fechaHoraViaje = asiento.getText() + ", " + destino.getText(); // Fecha y hora del viaje
-        String numeroAsientoText = asiento.getText(); // Número de asiento
-        String precioText = precio.getText(); // Precio del boleto
-        String numeroBusText = comboBus.getSelectedItem().toString(); // Número de bus
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+        String fechaViaje = sdf.format(fecha.getDate());// Fecha y hora del viaje
+        
+        SimpleDateFormat sdh = new SimpleDateFormat("HH:mm:ss"); // Formato de hora
+        String horaViaje = sdh.format((Date)hora.getValue());
+        String numeroAsiento = asiento.getText(); // Número de asiento
+        String precioBoleto = precio.getText(); // Precio del boleto
+        String numeroBus = comboBus.getSelectedItem().toString(); // Número de bus
 
         // Validar que los campos no estén vacíos
-        if (nombrePasajero.trim().isEmpty() || 
+        if (nombrePasajero.trim().isEmpty() ||
+            apellidoPasajero.trim().isEmpty() ||
             rutaDestino.trim().isEmpty() || 
-            fechaHoraViaje.trim().isEmpty() || 
-            numeroAsientoText.trim().isEmpty() || 
-            numeroBusText.trim().isEmpty()) {
+            fechaViaje.trim().isEmpty() || 
+            horaViaje.trim().isEmpty() ||
+            numeroAsiento.trim().isEmpty() ||
+            precioBoleto.trim().isEmpty() || 
+            numeroBus.trim().isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "Por favor, rellene todos los campos.");
             return;
         }
 
         try {
-            // Convertir los valores numéricos
-            int numeroAsiento = Integer.parseInt(numeroAsientoText);
-            double precioBoleto = Double.parseDouble(precioText);
-            int numeroBus = Integer.parseInt(numeroBusText);
 
             // Crear la instancia de venta
-            venta nuevaVenta = new venta(nombrePasajero, numeroAsiento, rutaDestino, fechaHoraViaje, precioBoleto, numeroBus);
+            venta nuevaVenta = new venta(nombrePasajero,apellidoPasajero, rutaDestino, numeroAsiento, numeroBus, fechaViaje, horaViaje, precioBoleto);
 
             // Guardar la venta en el archivo CSV
             guardarVentaEnArchivoCSV(nuevaVenta);
@@ -288,6 +298,38 @@ public class ventaNueva extends javax.swing.JInternalFrame implements selecciona
             e.printStackTrace();
         }
     }  
+    
+    public void cambiaEstadoAsiento(String numeroBus, String numAsiento){
+        String archivo = "datos/boletos.csv";
+        
+        List<String[]> filas = new ArrayList<>();
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] datos = linea.split(",");
+                
+                // Verificar si la columna tiene el valor a cambiar
+                if (datos[0].equals(numeroBus) && datos[1].equals(numAsiento)) {
+                    datos[2] = "ocupado"; // Cambiar el valor
+                }
+                filas.add(datos); // Guardar la fila (modificada o no)
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Escribir de nuevo el archivo con los cambios
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
+            for (String[] fila : filas) {
+                bw.write(String.join(",", fila));
+                bw.newLine(); // Escribir una nueva línea
+            }
+            System.out.println("Archivo actualizado correctamente.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     // Método para guardar la venta en archivo CSV
     public void guardarVentaEnArchivoCSV(venta venta) {
@@ -301,11 +343,13 @@ public class ventaNueva extends javax.swing.JInternalFrame implements selecciona
             
             // Escribir los datos de la venta en formato CSV (sin comillas)
             String linea = venta.getNombrePasajero() + "," +
-                           venta.getNumeroAsiento() + "," +
+                           venta.getApellidoPasajero() + "," +
                            venta.getRutaDestino() + "," +
-                           venta.getFechaHoraViaje() + "," +
-                           venta.getPrecioBoleto() + "," +
-                           venta.getNumeroBus();
+                           venta.getNumeroAsiento() + "," +
+                           venta.getNumeroBus() + "," +
+                           venta.getFechaViaje() + "," +
+                           venta.getHoraViaje() + "," +
+                           venta.getPrecioBoleto() + ",";
             
             // Escribir la línea en el archivo
             buffer.write(linea);
@@ -313,6 +357,8 @@ public class ventaNueva extends javax.swing.JInternalFrame implements selecciona
             
             // Cerrar el buffer y el escritor
             buffer.close();
+            
+            cambiaEstadoAsiento(venta.getNumeroBus(), venta.getNumeroAsiento());
             
         } catch (IOException e) {
             // Manejar errores al escribir en el archivo

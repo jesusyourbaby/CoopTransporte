@@ -179,13 +179,13 @@ public void cargarDatos() {
         if(fila != -1){
             String valor = jTable1.getValueAt(fila, 0).toString();
             if (listener != null) {
-                listener.recibirBoletos(valor); // Pasar el valor a la interfaz
-                this.dispose();
-            } else {
-                System.out.println("Error: El listener no ha sido asignado.");
+                if(jTable1.getValueAt(fila, 1).toString().equals("disponible")){
+                    listener.recibirBoletos(valor); // Pasar el valor a la interfaz
+                    this.dispose();
+                }else{
+                    javax.swing.JOptionPane.showMessageDialog(this, "Este asiento ya se encuentra ocupado");
+                }          
             }
-        }else{
-            System.out.println("Ninguna fila seleccionada");
         }
     }//GEN-LAST:event_seleccionarActionPerformed
 

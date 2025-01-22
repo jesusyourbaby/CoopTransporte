@@ -37,37 +37,6 @@ public class datos_clase {
         }
     }
     
-    public void guardarVentaEnArchivoCSV(venta venta) {
-        // Definir el archivo CSV donde se guardarán las ventas
-        String archivo = "datos/ventas.csv";
-        
-        try {
-            // Crear un objeto FileWriter para abrir el archivo en modo de adición
-            FileWriter writer = new FileWriter(archivo, true);
-            BufferedWriter buffer = new BufferedWriter(writer);
-            
-            // Escribir los datos de la venta en formato CSV (sin comillas)
-            String linea = venta.getNombrePasajero() + "," +
-                           venta.getNumeroAsiento() + "," +
-                           venta.getRutaDestino() + "," +
-                           venta.getFechaHoraViaje() + "," +
-                           venta.getPrecioBoleto() + "," +
-                           venta.getNumeroBus();
-            
-            // Escribir la línea en el archivo
-            buffer.write(linea);
-            buffer.newLine();  // Nueva línea para la siguiente venta
-            
-            // Cerrar el buffer y el escritor
-            buffer.close();
-            
-        } catch (IOException e) {
-            // Manejar errores al escribir en el archivo
-            javax.swing.JOptionPane.showMessageDialog(null,"Ocurrió un error al guardar la venta.");
-            e.printStackTrace();
-        }
-    }
-    
     public boolean guardarVentaBusCSV(bus bus) {
         
         if (existeBusEnArchivo(bus.getNumero(), "datos/buses.csv")) {

@@ -14,23 +14,27 @@ import java.io.IOException;
 public class venta {
     // Atributos
     private String nombrePasajero;
-    private int numeroAsiento;
+    private String apellidoPasajero;
     private String rutaDestino;
-    private String fechaHoraViaje;
-    private double precioBoleto;
-    private int numeroBus;
+    private String numeroAsiento;
+    private String numeroBus;
+    private String fechaViaje;
+    private String horaViaje;
+    private String precioBoleto;
 
-    // Constructor
-    public venta(String nombrePasajero, int numeroAsiento, String rutaDestino, String fechaHoraViaje, double precioBoleto, int numeroBus) {
+    public venta(String nombrePasajero, String apellidoPasajero, String rutaDestino, String numeroAsiento, String numeroBus, String fechaViaje, String horaViaje, String precioBoleto) {
         this.nombrePasajero = nombrePasajero;
-        this.numeroAsiento = numeroAsiento;
+        this.apellidoPasajero = apellidoPasajero;
         this.rutaDestino = rutaDestino;
-        this.fechaHoraViaje = fechaHoraViaje;
-        this.precioBoleto = precioBoleto;
+        this.numeroAsiento = numeroAsiento;
         this.numeroBus = numeroBus;
+        this.fechaViaje = fechaViaje;
+        this.horaViaje = horaViaje;
+        this.precioBoleto = precioBoleto;
     }
 
-    // Getters y Setters
+    
+    
     public String getNombrePasajero() {
         return nombrePasajero;
     }
@@ -39,12 +43,12 @@ public class venta {
         this.nombrePasajero = nombrePasajero;
     }
 
-    public int getNumeroAsiento() {
-        return numeroAsiento;
+    public String getApellidoPasajero() {
+        return apellidoPasajero;
     }
 
-    public void setNumeroAsiento(int numeroAsiento) {
-        this.numeroAsiento = numeroAsiento;
+    public void setApellidoPasajero(String apellidoPasajero) {
+        this.apellidoPasajero = apellidoPasajero;
     }
 
     public String getRutaDestino() {
@@ -55,47 +59,48 @@ public class venta {
         this.rutaDestino = rutaDestino;
     }
 
-    public String getFechaHoraViaje() {
-        return fechaHoraViaje;
+    public String getNumeroAsiento() {
+        return numeroAsiento;
     }
 
-    public void setFechaHoraViaje(String fechaHoraViaje) {
-        this.fechaHoraViaje = fechaHoraViaje;
+    public void setNumeroAsiento(String numeroAsiento) {
+        this.numeroAsiento = numeroAsiento;
     }
 
-    public double getPrecioBoleto() {
-        return precioBoleto;
-    }
-
-    public void setPrecioBoleto(double precioBoleto) {
-        this.precioBoleto = precioBoleto;
-    }
-
-    public int getNumeroBus() {
+    public String getNumeroBus() {
         return numeroBus;
     }
 
-    public void setNumeroBus(int numeroBus) {
+    public void setNumeroBus(String numeroBus) {
         this.numeroBus = numeroBus;
     }
 
+    public String getFechaViaje() {
+        return fechaViaje;
+    }
+
+    public void setFechaViaje(String fechaViaje) {
+        this.fechaViaje = fechaViaje;
+    }
+
+    public String getHoraViaje() {
+        return horaViaje;
+    }
+
+    public void setHoraViaje(String horaViaje) {
+        this.horaViaje = horaViaje;
+    }
+
+    public String getPrecioBoleto() {
+        return precioBoleto;
+    }
+
+    public void setPrecioBoleto(String precioBoleto) {
+        this.precioBoleto = precioBoleto;
+    }
+
+    
     /**
      * Método para guardar los datos de la venta en un archivo.
      */
-    public void guardarVentaEnArchivo(String nombreArchivo) {
-        try (FileWriter escritor = new FileWriter(nombreArchivo, true)) {
-            // Crear el registro de la venta
-            String registro = String.format(
-                "Nombre: %s, Asiento: %d, Ruta: %s, Fecha y Hora: %s, Precio: %.2f, Bus: %d\n",
-                nombrePasajero, numeroAsiento, rutaDestino, fechaHoraViaje, precioBoleto, numeroBus
-            );
-
-            // Escribir el registro en el archivo
-            escritor.write(registro);
-            System.out.println("Venta guardada en el archivo: " + nombreArchivo);
-        } catch (IOException e) {
-            System.err.println("Error al guardar la venta en el archivo: " + nombreArchivo);
-            e.printStackTrace();
-        }
-    }
 }

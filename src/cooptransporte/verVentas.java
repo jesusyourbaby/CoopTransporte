@@ -41,30 +41,31 @@ public class verVentas extends javax.swing.JInternalFrame {
         setTitle("Boletos Vendidos");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Cliente", "Asiento", "N. Bus", "N. Venta", "Destino", "Precio", "Cantidad"
+            new Object[][] {},
+            new String[]{"Nombre", "Cliente", "Destino", "Asiento", "Bus", "Fecha", "Hora", "Precio"}
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Todas las celdas NO son editables
             }
-        ));
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(38, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         pack();
@@ -79,19 +80,19 @@ public class verVentas extends javax.swing.JInternalFrame {
                 String[] datos = linea.split(","); // Dividir por coma
 
                 // Verificar que hay exactamente 7 elementos en cada línea
-                if (datos.length == 7) {
-                    String cliente = datos[0];     // Cliente
-                    String asiento = datos[1];     // Asiento
-                    String numeroBus = datos[2];   // Número de Bus
-                    String numeroVenta = datos[3]; // Número de Venta
-                    String destino = datos[4];     // Destino
-                    String precio = datos[5];      // Precio
-                    String cantidad = datos[6];    // Cantidad
+                    String nombre_cliente = datos[0];     // Cliente
+                    String apellido_cliente = datos[1];     // Asiento
+                    String ruta_destino = datos[2];   // Número de Bus
+                    String numero_asiento = datos[3]; // Número de Venta
+                    String numero_bus = datos[4];     // Destino
+                    String fecha_viaje = datos[5];      // Precio
+                    String hora_viaje = datos[6];
+                    String precio_boleto = datos[7];
 
                     // Aquí se debe usar jTable1, ya que es el componente real
-                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-                    model.addRow(new Object[]{cliente, asiento, numeroBus, numeroVenta, destino, precio, cantidad});
-                }
+                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel(
+                    );
+                    model.addRow(new Object[]{nombre_cliente, apellido_cliente, ruta_destino, numero_asiento, numero_bus, fecha_viaje, hora_viaje, precio_boleto});
             }
         } catch (IOException e) {
             JOptionPane.showMessageDialog(
