@@ -154,7 +154,7 @@ public class ventaNueva extends javax.swing.JInternalFrame implements selecciona
             }
         });
 
-        fecha.setDateFormatString("dd-mm-yyyy");
+        fecha.setDateFormatString("dd-MM-yyyy");
 
         jButton2.setText("...");
         jButton2.setPreferredSize(new java.awt.Dimension(30, 20));
@@ -180,7 +180,7 @@ public class ventaNueva extends javax.swing.JInternalFrame implements selecciona
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 103, Short.MAX_VALUE)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -257,7 +257,7 @@ public class ventaNueva extends javax.swing.JInternalFrame implements selecciona
         String apellidoPasajero = apellido.getText(); // Campo para el nombre del pasajero
         String rutaDestino = destino.getText(); // Ruta seleccionada en el campo de texto "destino"
         
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String fechaViaje = sdf.format(fecha.getDate());// Fecha y hora del viaje
         
         SimpleDateFormat sdh = new SimpleDateFormat("HH:mm:ss"); // Formato de hora
