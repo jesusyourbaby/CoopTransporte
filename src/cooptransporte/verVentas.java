@@ -18,8 +18,13 @@ import java.util.List;
 public class verVentas extends javax.swing.JInternalFrame {
     
    
-
-
+    String[] columnas = {"Nombre", "Cliente", "Destino", "Asiento", "Bus", "Fecha", "Hora", "Precio"};
+// Aquí se debe usar jTable1, ya que es el componente real
+    DefaultTableModel modelo = new DefaultTableModel(null, columnas){
+            public boolean isCellEditable(int row, int column) {
+                return false; // Ninguna celda será editable
+            }
+        };
     /**
      * Creates new form verVentas
      */
@@ -51,14 +56,13 @@ public class verVentas extends javax.swing.JInternalFrame {
         setTitle("Boletos Vendidos");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object[][] {},
-            new String[]{"Nombre", "Cliente", "Destino", "Asiento", "Bus", "Fecha", "Hora", "Precio"}
-        ) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false; // Todas las celdas NO son editables
+            new Object [][] {
+
+            },
+            new String [] {
+
             }
-        });
+        ));
         jScrollPane1.setViewportView(jTable1);
 
         jToggleButton1.setText("Cancelar Boleto");
@@ -80,7 +84,7 @@ public class verVentas extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Fecha de Viaje");
 
-        fecha.setDateFormatString("dd/MM/yyyy");
+        fecha.setDateFormatString("dd-MM-yyyy");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,16 +136,13 @@ public class verVentas extends javax.swing.JInternalFrame {
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         // TODO add your handling code here:                                              
-        String asientoIngresado = jTextField2.getText().trim();
-        String busIngresado = jTextField1.getText().trim();
+        String asientoIngresado = jTextField2.getText();
+        String busIngresado = jTextField1.getText();
 
         // Formatear la fecha correctamente
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String fechaIngresada = dateFormat.format(fecha.getDate()).trim();
         String archivo = "datos/ventas.csv";
-        System.out.println(fechaIngresada);
-        System.out.println(busIngresado);
-        System.out.println(asientoIngresado);
         
         List<String[]> filas = new ArrayList<>();
         
@@ -153,7 +154,6 @@ public class verVentas extends javax.swing.JInternalFrame {
                 // Verificar si la columna tiene el valor a cambiar
                 if (!datos[3].equals(asientoIngresado) || !datos[4].equals(busIngresado) || !datos[5].equals(fechaIngresada)) {
                     filas.add(datos); //Cambiar el valor                   
-                    System.out.println("AAAAAAAAAAAAAAAA");
                 }
                  
             }
@@ -167,11 +167,12 @@ public class verVentas extends javax.swing.JInternalFrame {
                 bw.write(String.join(",", fila));
                 bw.newLine(); // Escribir una nueva línea
             }
-            System.out.println("Archivo actualizado correctamente.");
-            this.dispose();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        modelo.setRowCount(0);
+        cargarVentas();
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -196,10 +197,8 @@ public class verVentas extends javax.swing.JInternalFrame {
                     String hora_viaje = datos[6];
                     String precio_boleto = datos[7];
 
-                    // Aquí se debe usar jTable1, ya que es el componente real
-                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel(
-                    );
-                    model.addRow(new Object[]{nombre_cliente, apellido_cliente, ruta_destino, numero_asiento, numero_bus, fecha_viaje, hora_viaje, precio_boleto});
+                    
+                    modelo.addRow(new Object[]{nombre_cliente, apellido_cliente, ruta_destino, numero_asiento, numero_bus, fecha_viaje, hora_viaje, precio_boleto});
             }
         } catch (IOException e) {
             JOptionPane.showMessageDialog(
@@ -209,6 +208,7 @@ public class verVentas extends javax.swing.JInternalFrame {
                 JOptionPane.ERROR_MESSAGE
             );
         }
+        jTable1.setModel(modelo);
     }
 
 

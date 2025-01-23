@@ -8,6 +8,8 @@ package cooptransporte;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JDesktopPane;
 
@@ -42,7 +44,7 @@ public void cargarDatos() {
         String archivo = "datos/buses.csv";
 
         // Crear el modelo de la tabla con las columnas ya definidas
-        String[] columnas = {"Número de Bus", "Estado"}; // Las columnas que ya tienes establecidas
+        String[] columnas = {"Número de Bus", "Ruta","Estado"}; // Las columnas que ya tienes establecidas
         DefaultTableModel modelo = new DefaultTableModel(null, columnas){
             public boolean isCellEditable(int row, int column) {
                 return false; // Ninguna celda será editable
@@ -55,7 +57,7 @@ public void cargarDatos() {
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(","); // Separar los datos por coma
 
-                    modelo.addRow(new Object[]{datos[0], datos[1]});
+                    modelo.addRow(new Object[]{datos[0], datos[1], datos[2]});
             }
         } catch (IOException e) {
             System.err.println("Error al leer el archivo: " + e.getMessage());
@@ -274,10 +276,18 @@ public void cargarDatos() {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int fila = jTable1.getSelectedRow();
         if (fila != -1) {
+            
+            LocalDate fechaActual = LocalDate.now();
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+            String fechaFormateada = fechaActual.format(formato);
+            
+            System.out.println("Fecha formateada "+fechaFormateada);
+            
             Object valor = jTable1.getValueAt(fila, 0); // 0 es la primera columna
             verAsientos va = new verAsientos();
             va.setBus(Integer.parseInt((String) valor));
-            va.cargarDatos();
+            va.cargarDatos(fechaFormateada);
             pr.moveToFront(va); // Mueve al frente
             pr.add(va, javax.swing.JDesktopPane.PALETTE_LAYER);
             System.out.println("Se abrira la ventana");

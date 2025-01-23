@@ -36,7 +36,6 @@ public class principal extends javax.swing.JFrame {
         datos_clase datos = new datos_clase();
         datos.verificarOCrearArchivo("ventas");
         datos.verificarOCrearArchivo("buses");
-        datos.verificarOCrearArchivo("boletos");
         initComponents();
         ImageIcon imagenFondo = new ImageIcon("src/images/fondo.jpg"); // Ruta de la imagen
         JLabel fondo = new JLabel(imagenFondo);
@@ -138,9 +137,19 @@ public class principal extends javax.swing.JFrame {
         jMenu4.setText("Consultas");
 
         jMenuItem7.setText("Informacion de Boleto");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem7);
 
         jMenuItem8.setText("Boletos Vendidos por Ruta/Fecha");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem8);
 
         jMenuBar1.add(jMenu4);
@@ -215,6 +224,24 @@ public class principal extends javax.swing.JFrame {
         // Agregar el nuevoBus (JInternalFrame) al JDesktopPane
         principal.add(fr, javax.swing.JDesktopPane.PALETTE_LAYER);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        infoBoleto fr = new infoBoleto();
+        fr.cargaCombo();
+        fr.setPr(principal);
+        // Agregar el nuevoBus (JInternalFrame) al JDesktopPane
+        principal.add(fr, javax.swing.JDesktopPane.PALETTE_LAYER);
+        fr.setVisible(true);    // Hacer visible el JInternalFrame
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        
+        RutaFecha fr = new RutaFecha();        
+        fr.setPr(principal);
+        // Agregar el nuevoBus (JInternalFrame) al JDesktopPane
+        principal.add(fr, javax.swing.JDesktopPane.PALETTE_LAYER);
+        fr.setVisible(true);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     /**
      * @param args the command line arguments

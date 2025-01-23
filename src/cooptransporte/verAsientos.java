@@ -9,6 +9,11 @@ import interfaces.selecciona_boletos;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,6 +28,14 @@ public class verAsientos extends javax.swing.JInternalFrame {
      */
     int bus;
     private selecciona_boletos listener;
+    String[] columnas = {"Asiento", "Estado"};
+    DefaultTableModel modelo = new DefaultTableModel(null, columnas){
+            public boolean isCellEditable(int row, int column) {
+                return false; // Ninguna celda será editable
+            }
+        };
+    
+    
 
     public void setListener(selecciona_boletos listener) {
         this.listener = listener;  // Asignar la instancia de VentanaDestino
@@ -44,25 +57,29 @@ public class verAsientos extends javax.swing.JInternalFrame {
         this.bus = bus;
     }
     
-    
-    
-    public verAsientos() {
-        initComponents();
+    public void llenaModelo(){
+        for (int i = 0; i < 50; i++) {
+            modelo.addRow(new Object[]{i+1, "disponible"});
+        }
+        jTable1.setModel(modelo);
     }
     
     
     
-public void cargarDatos() {
+    public verAsientos() {
+        initComponents();
+        for (int i = 0; i < 50; i++) {
+            modelo.addRow(new Object[]{i+1, "disponible"});
+        }
+        jTable1.setModel(modelo);
+        
+    }
+    
+    
+    
+public void cargarDatos(String fecha) {
         // Definir el archivo CSV
-        String archivo = "datos/boletos.csv";
-
-        // Crear el modelo de la tabla con las columnas ya definidas
-        String[] columnas = {"Asiento", "Estado"}; // Las columnas que ya tienes establecidas
-        DefaultTableModel modelo = new DefaultTableModel(null, columnas){
-            public boolean isCellEditable(int row, int column) {
-                return false; // Ninguna celda será editable
-            }
-        };
+        String archivo = "datos/ventas.csv";
         
         // Leer el archivo y cargar los datos en el modelo
         try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
@@ -70,10 +87,14 @@ public void cargarDatos() {
             numBus.setText(String.valueOf(bus));
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(","); // Separar los datos por coma
-                
-                    if(Integer.parseInt(datos[0]) == bus){
-                        modelo.addRow(new Object[]{datos[1], datos[2]});
-                    }
+                System.out.println("");
+                if(datos[4].equals(String.valueOf(bus)) && datos[5].equals(fecha)){
+                   int fila = buscarFilaPorId(datos[3]);
+                    if(fila != -1){
+                        modelo.setValueAt("ocupado", fila, 1);
+                    }       
+                }
+                    
             }
         } catch (IOException e) {
             System.err.println("Error al leer el archivo: " + e.getMessage());
@@ -81,6 +102,17 @@ public void cargarDatos() {
 
         // Asignar el modelo a la JTable
         jTable1.setModel(modelo); // jTable1 es la tabla donde se cargarán los datos
+}
+
+public int buscarFilaPorId(String idBuscado) {
+    for (int fila = 0; fila < modelo.getRowCount(); fila++) {
+        Object valor = modelo.getValueAt(fila, 0); // Primera columna (ID)
+
+        if (valor != null && valor.toString().equals(idBuscado)) {
+            return fila; // Retorna el índice de la fila donde está el ID
+        }
+    }
+    return -1; // Retorna -1 si no se encuentra el ID
 }
 
     /**
@@ -97,11 +129,13 @@ public void cargarDatos() {
         seleccionar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         numBus = new javax.swing.JLabel();
+        fecha = new com.toedter.calendar.JDateChooser();
+        jButton1 = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Lista de Boletos");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setPreferredSize(new java.awt.Dimension(336, 270));
+        setPreferredSize(new java.awt.Dimension(361, 285));
         try {
             setSelected(true);
         } catch (java.beans.PropertyVetoException e1) {
@@ -137,6 +171,18 @@ public void cargarDatos() {
         numBus.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         numBus.setForeground(new java.awt.Color(51, 51, 255));
 
+        LocalDate fechaActual = LocalDate.now();
+        Date date = Date.from(fechaActual.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        fecha.setDate(date);
+        fecha.setDateFormatString("dd-MM-yyyy");
+
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -145,25 +191,33 @@ public void cargarDatos() {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 183, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(seleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(numBus, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(fecha, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(numBus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(numBus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(fecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(0, 2, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(seleccionar)
                 .addContainerGap())
@@ -191,8 +245,25 @@ public void cargarDatos() {
         // TODO add your handling code here:
     }//GEN-LAST:event_noMovimiento
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(fecha.getDate() != null){
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            String fechaBusca = sdf.format(fecha.getDate());
+            System.out.println(fechaBusca);
+            modelo.setRowCount(0);
+            llenaModelo();
+            cargarDatos(fechaBusca);
+        }else{
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una fecha valida");  
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser fecha;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

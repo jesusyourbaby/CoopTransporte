@@ -83,8 +83,8 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="jTable1">
           <Properties>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.table.DefaultTableModel(&#xa;            new Object[][] {},&#xa;            new String[]{&quot;Nombre&quot;, &quot;Cliente&quot;, &quot;Destino&quot;, &quot;Asiento&quot;, &quot;Bus&quot;, &quot;Fecha&quot;, &quot;Hora&quot;, &quot;Precio&quot;}&#xa;        ) {&#xa;            @Override&#xa;            public boolean isCellEditable(int row, int column) {&#xa;                return false; // Todas las celdas NO son editables&#xa;            }&#xa;        }" type="code"/>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+              <Table columnCount="0" rowCount="0"/>
             </Property>
           </Properties>
         </Component>
@@ -123,7 +123,7 @@
     <Component class="com.toedter.calendar.JDateChooser" name="fecha">
       <Properties>
         <Property name="dateFormatString" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="&quot;dd/MM/yyyy&quot;" type="code"/>
+          <Connection code="&quot;dd-MM-yyyy&quot;" type="code"/>
         </Property>
       </Properties>
     </Component>

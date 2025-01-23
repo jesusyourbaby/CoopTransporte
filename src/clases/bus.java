@@ -4,15 +4,21 @@ package clases;
 public class bus {
     
     public int numero;
+    public String ruta;
     public String estado;
-    boletos[] asientos = new boletos[50];
 
-    public bus(int numero) {
+    public bus(int numero, String ruta) {
         this.numero = numero;
+        this.ruta = ruta;
         this.estado = "disponible";
-        for (int i = 0; i < asientos.length; i++) {
-            asientos[i] = new boletos(i+1);
-        }
+    }
+
+    public String getRuta() {
+        return ruta;
+    }
+
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
     }
 
     public int getNumero() {
@@ -21,14 +27,6 @@ public class bus {
 
     public void setNumero(int numero) {
         this.numero = numero;
-    }
-
-    public boletos[] getAsientos() {
-        return asientos;
-    }
-
-    public void setAsientos(boletos[] asientos) {
-        this.asientos = asientos;
     }
 
     public String getEstado() {

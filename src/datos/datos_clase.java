@@ -53,6 +53,7 @@ public class datos_clase {
             
             // Escribir los datos de la venta en formato CSV (sin comillas)
             String linea = bus.getNumero() + "," +
+                           bus.getRuta() + "," +
                            bus.getEstado();
             
             // Escribir la línea en el archivo
@@ -62,28 +63,7 @@ public class datos_clase {
             // Cerrar el buffer y el escritor
             buffer.close();
             
-            try {
-                // Crear un objeto FileWriter para abrir el archivo en modo de adición
-                FileWriter writerB = new FileWriter("datos/boletos.csv", true);
-                BufferedWriter bufferB = new BufferedWriter(writerB);
-                System.out.println(bus.getAsientos().length);
-                for(int i = 0; i < bus.getAsientos().length ; i++ ) {
-                    String lineaB = bus.getNumero() + "," +
-                               bus.getAsientos()[i].getAsiento() + ","+
-                                bus.getAsientos()[i].getDisponible();
-                    bufferB.write(lineaB);
-                    bufferB.newLine();  // Nueva línea para la siguiente venta
-
-                }
-
-                bufferB.close();
-                
-                return true;
-
-            } catch (IOException e) {
-                // Manejar errores al escribir en el archivo
-                return false;
-            }
+            return true;
             
         } catch (IOException e) {
             // Manejar errores al escribir en el archivo
