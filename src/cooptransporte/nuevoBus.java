@@ -118,6 +118,10 @@ public class nuevoBus extends javax.swing.JInternalFrame {
             
             if(datos.guardarVentaBusCSV(b)){
                 this.dispose();
+                javax.swing.JOptionPane.showMessageDialog(
+                            this, 
+                            "Bus creado correctamente."
+                        );
             }else{
                 javax.swing.JOptionPane.showMessageDialog(null,"El numero de bus ya esta registrado");
             }

@@ -164,7 +164,7 @@ public void cargarDatos() {
         if (fila != -1) {
             // Obtener el número de bus y el estado de la fila seleccionada
             String numeroBus = jTable1.getValueAt(fila, 0).toString();
-            String estadoBus = jTable1.getValueAt(fila, 1).toString();
+            String estadoBus = jTable1.getValueAt(fila, 2).toString();
 
             switch (estadoBus) {
                 case "disponible":
@@ -227,7 +227,7 @@ public void cargarDatos() {
     private void eliminarBusYAsientos(String numeroBus) {
         // Ruta de los archivos CSV
         String archivoBuses = "datos/buses.csv";
-        String archivoBoletos = "datos/boletos.csv";
+        String archivoBoletos = "datos/ventas.csv";
 
         // **1. Eliminar el bus del archivo buses.csv**
         StringBuilder contenidoActualizadoBuses = new StringBuilder();
@@ -255,7 +255,7 @@ public void cargarDatos() {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                if (!datos[0].equals(numeroBus)) { // Excluir boletos del bus seleccionado
+                if (!datos[4].equals(numeroBus)) { // Excluir boletos del bus seleccionado
                     contenidoActualizadoBoletos.append(linea).append("\n");
                 }
             }

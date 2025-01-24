@@ -22,6 +22,11 @@ public class venta {
     private String horaViaje;
     private String precioBoleto;
 
+    public venta() {
+    }
+
+    
+    
     public venta(String nombrePasajero, String apellidoPasajero, String rutaDestino, String numeroAsiento, String numeroBus, String fechaViaje, String horaViaje, String precioBoleto) {
         this.nombrePasajero = nombrePasajero;
         this.apellidoPasajero = apellidoPasajero;

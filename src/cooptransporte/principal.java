@@ -5,7 +5,6 @@
  */
 package cooptransporte;
 
-import clases.boletos;
 import clases.bus;
 import datos.datos_clase;
 import java.awt.event.MouseAdapter;
