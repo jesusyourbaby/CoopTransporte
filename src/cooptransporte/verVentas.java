@@ -30,7 +30,6 @@ public class verVentas extends javax.swing.JInternalFrame {
      */
     public verVentas() {
         initComponents();
-        cargarVentas();
     }
 
     /**
@@ -180,7 +179,7 @@ public class verVentas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
         // Método para cargar los boletos vendidos desde boletos.csv
-        private void cargarVentas() {
+        public void cargarVentas() {
         String archivoVentas = "datos/ventas.csv";  // Verifica que la ruta sea correcta
         try (BufferedReader reader = new BufferedReader(new FileReader(archivoVentas))) {
             String linea;
@@ -199,6 +198,42 @@ public class verVentas extends javax.swing.JInternalFrame {
 
                     
                     modelo.addRow(new Object[]{nombre_cliente, apellido_cliente, ruta_destino, numero_asiento, numero_bus, fecha_viaje, hora_viaje, precio_boleto});
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Error al leer el archivo de ventas: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        jTable1.setModel(modelo);
+    }
+        
+    public void Ruta_Fecha(String fecha, String ruta){
+        System.out.println(fecha+" ||| "+ruta);
+        String archivoVentas = "datos/ventas.csv";  // Verifica que la ruta sea correcta
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivoVentas))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] datos = linea.split(","); 
+                
+                if(datos[2].equals(ruta) && datos[5].equals(fecha)){
+  
+                    String nombre_cliente = datos[0];     // Cliente
+                    String apellido_cliente = datos[1];     // Asiento
+                    String ruta_destino = datos[2];   // Número de Bus
+                    String numero_asiento = datos[3]; // Número de Venta
+                    String numero_bus = datos[4];
+                    String fecha_viaje = datos[5];
+                    String hora_viaje = datos[6];
+                    String precio_boleto = datos[7];
+
+                    
+                    modelo.addRow(new Object[]{nombre_cliente, apellido_cliente, ruta_destino, numero_asiento, numero_bus, fecha_viaje, hora_viaje, precio_boleto});
+                }
+
+
             }
         } catch (IOException e) {
             JOptionPane.showMessageDialog(
